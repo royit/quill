@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,13 @@
 		B0667AC7239010B500E450AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0667AC5239010B500E450AB /* Main.storyboard */; };
 		B0667AC9239010B700E450AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0667AC8239010B700E450AB /* Assets.xcassets */; };
 		B0667ACC239010B700E450AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0667ACA239010B700E450AB /* LaunchScreen.storyboard */; };
+		B0667AD42390112100E450AB /* core.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0667AD32390112100E450AB /* core.bundle */; };
+		B0667AD72390114A00E450AB /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0667AD62390114A00E450AB /* Editor.swift */; };
+		B0667ADA2390127A00E450AB /* RLayoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = B0667AD92390127A00E450AB /* RLayoutKit */; };
+		B095AF6823901343007A873B /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095AF6723901343007A873B /* EditorViewController.swift */; };
+		B095AF6D23901748007A873B /* ScrollContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095AF6A23901748007A873B /* ScrollContainerViewController.swift */; };
+		B095AF6E23901748007A873B /* WrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095AF6B23901748007A873B /* WrapperView.swift */; };
+		B095AF6F23901748007A873B /* WrapperViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095AF6C23901748007A873B /* WrapperViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,12 @@
 		B0667AC8239010B700E450AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0667ACB239010B700E450AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0667ACD239010B700E450AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0667AD32390112100E450AB /* core.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = core.bundle; sourceTree = "<group>"; };
+		B0667AD62390114A00E450AB /* Editor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
+		B095AF6723901343007A873B /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
+		B095AF6A23901748007A873B /* ScrollContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollContainerViewController.swift; sourceTree = "<group>"; };
+		B095AF6B23901748007A873B /* WrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WrapperView.swift; sourceTree = "<group>"; };
+		B095AF6C23901748007A873B /* WrapperViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WrapperViewDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0667ADA2390127A00E450AB /* RLayoutKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +70,77 @@
 		B0667ABE239010B500E450AB /* Quill */ = {
 			isa = PBXGroup;
 			children = (
+				B095AF6923901748007A873B /* WrapperView */,
+				B0667ADF239012F200E450AB /* Features */,
+				B0667ADC239012A900E450AB /* AppDelegate */,
+				B0667ADB2390129300E450AB /* Editor */,
+				B0667ADE239012C800E450AB /* Sources */,
+				B0667ADD239012B600E450AB /* Supporting files */,
+			);
+			path = Quill;
+			sourceTree = "<group>";
+		};
+		B0667ADB2390129300E450AB /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B0667AD62390114A00E450AB /* Editor.swift */,
+				B095AF6723901343007A873B /* EditorViewController.swift */,
+				B0667AE02390130100E450AB /* Core */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		B0667ADC239012A900E450AB /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
 				B0667ABF239010B500E450AB /* AppDelegate.swift */,
 				B0667AC1239010B500E450AB /* SceneDelegate.swift */,
-				B0667AC3239010B500E450AB /* ViewController.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		B0667ADD239012B600E450AB /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
 				B0667AC5239010B500E450AB /* Main.storyboard */,
-				B0667AC8239010B700E450AB /* Assets.xcassets */,
 				B0667ACA239010B700E450AB /* LaunchScreen.storyboard */,
 				B0667ACD239010B700E450AB /* Info.plist */,
 			);
-			path = Quill;
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		B0667ADE239012C800E450AB /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B0667AC8239010B700E450AB /* Assets.xcassets */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		B0667ADF239012F200E450AB /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				B0667AC3239010B500E450AB /* ViewController.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		B0667AE02390130100E450AB /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B0667AD32390112100E450AB /* core.bundle */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		B095AF6923901748007A873B /* WrapperView */ = {
+			isa = PBXGroup;
+			children = (
+				B095AF6A23901748007A873B /* ScrollContainerViewController.swift */,
+				B095AF6B23901748007A873B /* WrapperView.swift */,
+				B095AF6C23901748007A873B /* WrapperViewDataSource.swift */,
+			);
+			path = WrapperView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +159,9 @@
 			dependencies = (
 			);
 			name = Quill;
+			packageProductDependencies = (
+				B0667AD92390127A00E450AB /* RLayoutKit */,
+			);
 			productName = Quill;
 			productReference = B0667ABC239010B500E450AB /* Quill.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +190,9 @@
 				Base,
 			);
 			mainGroup = B0667AB3239010B500E450AB;
+			packageReferences = (
+				B0667AD82390127A00E450AB /* XCRemoteSwiftPackageReference "RLayoutKit" */,
+			);
 			productRefGroup = B0667ABD239010B500E450AB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0667AD42390112100E450AB /* core.bundle in Resources */,
 				B0667ACC239010B700E450AB /* LaunchScreen.storyboard in Resources */,
 				B0667AC9239010B700E450AB /* Assets.xcassets in Resources */,
 				B0667AC7239010B500E450AB /* Main.storyboard in Resources */,
@@ -140,7 +223,12 @@
 			files = (
 				B0667AC4239010B500E450AB /* ViewController.swift in Sources */,
 				B0667AC0239010B500E450AB /* AppDelegate.swift in Sources */,
+				B0667AD72390114A00E450AB /* Editor.swift in Sources */,
+				B095AF6823901343007A873B /* EditorViewController.swift in Sources */,
 				B0667AC2239010B500E450AB /* SceneDelegate.swift in Sources */,
+				B095AF6F23901748007A873B /* WrapperViewDataSource.swift in Sources */,
+				B095AF6D23901748007A873B /* ScrollContainerViewController.swift in Sources */,
+				B095AF6E23901748007A873B /* WrapperView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +374,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HLDMS4HSVA;
-				INFOPLIST_FILE = Quill/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Quill/Supporting files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,7 +392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HLDMS4HSVA;
-				INFOPLIST_FILE = Quill/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Quill/Supporting files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -338,6 +426,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B0667AD82390127A00E450AB /* XCRemoteSwiftPackageReference "RLayoutKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:royit/RLayoutKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B0667AD92390127A00E450AB /* RLayoutKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0667AD82390127A00E450AB /* XCRemoteSwiftPackageReference "RLayoutKit" */;
+			productName = RLayoutKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B0667AB4239010B500E450AB /* Project object */;
 }

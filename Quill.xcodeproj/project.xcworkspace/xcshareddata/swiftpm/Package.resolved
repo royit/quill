@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "RLayoutKit",
+        "repositoryURL": "git@github.com:royit/RLayoutKit.git",
+        "state": {
+          "branch": null,
+          "revision": "8ce1b7331e94fba6197fa0cb1e6f6df644b94850",
+          "version": "0.4.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
