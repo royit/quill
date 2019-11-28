@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import RLayoutKit
 
 class ScrollContainerViewController: UIViewController {
     private var webView = WKWebView(frame: .zero, configuration: .init())
@@ -41,24 +42,17 @@ class ScrollContainerViewController: UIViewController {
         tableView.rowHeight = 50
         tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
         
-		wrapper.added(to: view, activateLayoutContraints: {
-			let constraints = [
-				$0.leadingAnchor.constraint(equalTo: $1.leadingAnchor),
-				$0.trailingAnchor.constraint(equalTo: $1.trailingAnchor),
-				$0.bottomAnchor.constraint(equalTo: $1.bottomAnchor)
-			]
-			
-			let topConstraint: NSLayoutConstraint
+		wrapper.added(to: view, layout: {
+			$0.leading == $1.leading
+			$0.terminal == $1.terminal
 			
 			if #available(iOS 11.0, *) {
-				topConstraint = $0.topAnchor.constraint(equalTo: $1.safeAreaLayoutGuide.topAnchor)
+				$0.top == $1.safeAreaTop
 			} else {
-				topConstraint = $0.topAnchor.constraint(equalTo: $1.topAnchor)
+				$0.top == $1.top
 			}
-			
-			return constraints + [topConstraint]
 		}, config: {
-            $0.enableSeparator = true
+			$0.enableSeparator = true
             $0.separatorColor = .black
             $0.separatorHeight = 10
             $0.separatorStyle = .withFirstTop

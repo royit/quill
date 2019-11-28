@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RLayoutKit
 
 public final class WrapperView: UIScrollView {
     
@@ -141,31 +142,27 @@ public final class WrapperView: UIScrollView {
     
     // MARK: - Content View
     private func addContentView() {
-        contentView.added(to: self, activateLayoutContraints: {
-            let topConstraint: NSLayoutConstraint
+		contentView.added(to: self, layout: {
+			let topConstraint: NSLayoutConstraint
             let heightConstraint: NSLayoutConstraint
-            
-            if #available(iOS 11.0, *) {
-                topConstraint = $0.topAnchor.constraint(equalTo: $1.topAnchor, constant: $1.safeAreaInsets.top)
-                heightConstraint = $0.heightAnchor.constraint(equalTo: $1.heightAnchor, constant: -containerContentHeightInset)
-            } else {
-                topConstraint = $0.topAnchor.constraint(equalTo: $1.topAnchor)
-                heightConstraint = $0.heightAnchor.constraint(equalTo: $1.heightAnchor)
-            }
-            
-            topConstraint.identifier = Constraint.Content.top.identifier
+			
+			if #available(iOS 11.0, *) {
+				topConstraint = $0.top == $1.top + $1.base.safeAreaInsets.top
+				heightConstraint = $0.height == $1.height - containerContentHeightInset
+			} else {
+				topConstraint = $0.top == $1.top
+				heightConstraint = $0.height == $1.height
+			}
+			
+			topConstraint.identifier = Constraint.Content.top.identifier
             heightConstraint.identifier = Constraint.Content.height.identifier
-            
-            return [
-                topConstraint,
-                heightConstraint,
-                $0.leadingAnchor.constraint(equalTo: $1.leadingAnchor),
-                $0.trailingAnchor.constraint(equalTo: $1.trailingAnchor),
-                $0.widthAnchor.constraint(equalTo: $1.widthAnchor)
-            ]
-        }, config: {
-            $0.backgroundColor = .white
-        })
+			
+			$0.leading == $1.leading
+			$0.trailing == $1.trailing
+			$0.width == $1.width
+		}, config: {
+			$0.backgroundColor = .white
+		})
     }
     
     private func updateContentViewLayout() {
@@ -221,39 +218,35 @@ public final class WrapperView: UIScrollView {
 		var previousView: UIView?
 		
 		cachedViews.enumerated().forEach { index, view in
-			view.added(to: contentView, activateLayoutContraints: {
-				var constraints = [$0.trailingAnchor.constraint(equalTo: $1.trailingAnchor)]
-
+			view.added(to: contentView, layout: {
+				$0.trailing == $1.trailing
+				
 				// top
 				let topConstraint: NSLayoutConstraint
 				if let previous = previousView {
-					topConstraint = $0.topAnchor.constraint(equalTo: previous.bottomAnchor)
+					topConstraint = $0.top == previous.rl.bottom
 				} else {
-					topConstraint = $0.topAnchor.constraint(equalTo: $1.topAnchor)
+					topConstraint = $0.top == $1.top
 				}
-				
+
                 topConstraint.identifier = Constraint.InnerView.top.id(at: index)
-				constraints.append(topConstraint)
 				
 				// leading & height
                 var leadingConstant: CGFloat = 0
                 let delegateIndex = getDelegateIndex(forCachedViewIndex: index)
 				if view is WrapperInnerScrollViewType {
 					let height = wrapperDelegate?.wrapperView(self, heightForInnerViewAt: delegateIndex) ?? 100
-					let heightConstraint = $0.heightAnchor.constraint(equalToConstant: height)
+					let heightConstraint = $0.height == height
 					// add identifier
 					heightConstraint.identifier = Constraint.InnerView.height.id(at: index)
-					constraints.append(heightConstraint)
                 } else if view is Separator {
                     leadingConstant = separatorLeadingInset
-                    constraints.append($0.heightAnchor.constraint(equalToConstant: separatorHeight))
+					$0.height == separatorHeight
                 } else if let height = wrapperDelegate?.wrapperView(self, heightForInnerViewAt: index) {
-					constraints.append($0.heightAnchor.constraint(equalToConstant: height))
+					$0.height == height
 				}
-                
-                constraints.append($0.leadingAnchor.constraint(equalTo: $1.leadingAnchor, constant: leadingConstant))
 				
-				return constraints
+				$0.leading == $1.leading + leadingConstant
 			}, config: {
 				if let scrollView = ($0 as? WrapperInnerScrollViewType)?.scrollView {
 					scrollView.isScrollEnabled = false
@@ -262,7 +255,7 @@ public final class WrapperView: UIScrollView {
 					self.addObservation(forInnerScrollView: scrollView)
 				}
 			})
-			
+
 			previousView = view
 		}
 		
@@ -335,17 +328,14 @@ extension ConstraintIdentifierable {
 protocol ViewChainable {}
 
 extension ViewChainable where Self: UIView {
-	typealias ConstraintsClosure<T> = (T, UIView) -> [NSLayoutConstraint]
 	typealias ConfigClosure<T> = (T) -> Void
+	typealias LayoutClusore<T, V> = (RLayoutKitWrapper<T>, RLayoutKitWrapper<V>) -> Void
 	
 	@discardableResult
 	func added(to superview: UIView,
-			   activateLayoutContraints contraints: ConstraintsClosure<Self>,
+			   layout layoutClosure: LayoutClusore<Self, UIView>,
 			   config: ConfigClosure<Self>? = nil) -> Self {
-		translatesAutoresizingMaskIntoConstraints = false
-		superview.addSubview(self)
-		
-		NSLayoutConstraint.activate(contraints(self, superview))
+		rl.added(to: superview, andLayout: layoutClosure)
 		config?(self)
 		return self
 	}
