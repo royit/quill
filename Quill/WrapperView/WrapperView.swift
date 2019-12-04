@@ -110,8 +110,9 @@ public final class WrapperView: UIScrollView {
                     }
                     
                     // adjust inner scroll height
-                    if let height = view.constraint(for: Constraint.InnerView.height.id(at: index)) {
-                        height.constant = max(contentViewHeight, contentViewHeight + innerOffsetY)
+                    if let heightConstraint = view.constraint(for: Constraint.InnerView.height.id(at: index)) {
+						let height = max(contentViewHeight, contentViewHeight + innerOffsetY)
+                        heightConstraint.constant = min(height, contentViewHeight)
                     }
                     
                     innerScrollView.contentOffset.y = 0
@@ -125,7 +126,7 @@ public final class WrapperView: UIScrollView {
                     innerScrollView.contentOffset.y = y
                 default:
                     if let top = contentView.constraint(for: Constraint.InnerView.top.id(at: index)) {
-                        top.constant = innerContentHeight - contentView.bounds.height
+                        top.constant = max(0, innerContentHeight - contentViewHeight)
                     }
                     
                     innerScrollView.contentOffset.y = innerContentHeight - innerHeight
