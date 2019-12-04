@@ -21,7 +21,7 @@ class ViewController: UIViewController {
 		let button = UIButton()
 		button.addTarget(self, action: #selector(showEditor), for: .touchUpInside)
 		button.setTitle("Editor", for: .normal)
-		button.setTitleColor(.black, for: .normal)
+//		button.setTitleColor(.black, for: .normal)
 		
 		button.rl.added(to: view) {
 			$0.center == $1.center
