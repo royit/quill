@@ -9,7 +9,7 @@
 import UIKit
 import WebKit.WKWebView
 
-public protocol WrapperInnerScrollViewType {
+public protocol WrapperInnerScrollViewType: UIView {
 	var scrollView: UIScrollView { get }
 }
 

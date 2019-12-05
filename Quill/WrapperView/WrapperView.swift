@@ -231,15 +231,11 @@ public final class WrapperView: UIScrollView {
 			
 			switch cachedView {
 			case let .innerScroll(inner, scroll):
-				if let innerView = inner as? UIView {
-					innerView.added(to: scroll, layout: {
-						let leadingConstraint = $0.leading == $1.leading
-						leadingConstraint.identifier = Constraint.InnerScrollTypeView.leading.identifier
-						$0.trailing == $0.trailing
-						$0.terminal == $0.terminal
-						$0.size == $1.size
-					})
-				}
+                (inner as UIView).added(to: scroll, layout: {
+                    ($0.leading == $1.leading).identifier = Constraint.InnerScrollTypeView.leading.identifier
+                    $0.top == $1.top
+                    $0.size == $1.size
+                })
 				
 				scroll.added(to: contentView, layout: {
 					// trailing
@@ -292,7 +288,7 @@ public final class WrapperView: UIScrollView {
 
 			previousView = addedView
 		}
-		
+
 		innerViewsHasAdded = true
 	}
     
@@ -311,9 +307,12 @@ public final class WrapperView: UIScrollView {
         innerViewObservations.append(scrollView.observe(\.contentSize, options: .old) { [unowned self] (scrollView, value) in
             guard let oldSize = value.oldValue, scrollView.contentSize != oldSize else { return }
             self.updateContainerContentSize()
-			self.updateBackScrollContentSize(at: index)
 			
-			self.log("contentSize: \(scrollView.contentSize), contentOffset: \(scrollView.contentOffset)")
+            if scrollView.isZooming {
+                self.updateBackScrollContentSize(at: index)
+            }
+            
+            self.log("inner scroll contentSize: \(scrollView.contentSize)")
             self.setNeedsLayout()
         })
     }
@@ -321,42 +320,12 @@ public final class WrapperView: UIScrollView {
 	private func log(_ s: String) {
 		print("log -> \(s)")
 	}
-	
-//	private func addObservation(forInnerBackScrollView scrollView: UIScrollView, at index: Int) {
-//        innerViewObservations.append(scrollView.observe(\.contentOffset, options: .old) { [unowned self] (scrollView, value) in
-//            guard let oldOffset = value.oldValue, scrollView.contentOffset != oldOffset else { return }
-//
-//			self.log("contentOffset: \(scrollView.contentOffset)")
-//			self.updateInnserScorllPositonForBackScrollView(at: index)
-//        })
-//    }
-	
+
 	private func updateBackScrollContentSize(at index: Int) {
-		guard
-			case let .innerScroll(inner, scroll) = cachedViews[index],
-			let leadingConstraint = scroll.constraint(for: Constraint.InnerScrollTypeView.leading.identifier)
-			else { return }
+		guard case let .innerScroll(inner, scroll) = cachedViews[index] else { return }
 			
-		let offsetX = inner.scrollView.contentOffset.x
 		scroll.contentSize.width = inner.scrollView.contentSize.width
-//		scroll.contentOffset.x = offsetX
-//		leadingConstraint.constant = offsetX
-		
-		self.log("updateBackScrollContentSize leadingConstraint.constant: \(leadingConstraint.constant)")
 	}
-	
-//	private func updateInnserScorllPositonForBackScrollView(at index: Int) {
-//		guard
-//			case let .innerScroll(inner, scroll) = cachedViews[index],
-//			let leadingConstraint = scroll.constraint(for: Constraint.InnerScrollTypeView.leading.identifier)
-//			else {
-//				return
-//		}
-//
-//		let offsetX = scroll.contentOffset.x
-//		leadingConstraint.constant = offsetX
-//		inner.scrollView.contentOffset.x = offsetX
-//	}
 }
 
 extension WrapperView: UIScrollViewDelegate {
