@@ -39,7 +39,7 @@ class EditorViewController: UIViewController {
 		
 		wrapper.enableSeparator = true
 		wrapper.separatorColor = .black
-		wrapper.separatorHeight = 10
+		wrapper.separatorHeight = 1
 		wrapper.separatorStyle = .withFirstTop
 		wrapper.dataSource = self
 		wrapper.wrapperDelegate = self
@@ -55,6 +55,7 @@ class EditorViewController: UIViewController {
         header1.backgroundColor = .systemBlue
         
         tableView.dataSource = self
+		tableView.delegate = self
         tableView.rowHeight = 50
         tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
     }
@@ -73,7 +74,7 @@ extension EditorViewController: WrapperViewDelegate {
 
 extension EditorViewController: WrapperViewDataSource {
 	var numberOfInnerViews: Int {
-		7
+		3
 	}
 	
 	func wrapperView(_ wrapperView: WrapperView, innerViewAt index: Int) -> UIView {
@@ -117,4 +118,21 @@ extension EditorViewController: UITableViewDataSource {
         
         return cell
     }
+}
+
+extension EditorViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		switch indexPath.row {
+		case 0:
+			editor.focus()
+		case 1:
+			editor.hasFocus().done {
+				print("has focus: \($0)")
+			}
+		case 2:
+			editor.setText()
+		default:
+			break
+		}
+	}
 }

@@ -9,12 +9,17 @@
 import UIKit
 import WebKit
 import RLayoutKit
+import PromiseKit
+
+func DLOG(f: String = #function, line: Int = #line, message: @autoclosure () -> Any) {
+	print("Editor f: \(f), at line: \(line) msg: \(message())")
+}
 
 class Editor: UIView, WrapperInnerScrollViewType {
 	var scrollView: UIScrollView { webView.scrollView }
 	
 	/// content
-	private var webView: WKWebView
+	private let webView: WKWebView
 	private var hasConstructWeb = false
 	
 	override init(frame: CGRect) {
@@ -28,6 +33,8 @@ class Editor: UIView, WrapperInnerScrollViewType {
 		config.userContentController = userContentController
 		
 		webView = WKWebView(frame: .zero, configuration: config)
+		webView.setKeyboardRequiresUserInteraction(false)
+		
 		super.init(frame: frame)
 		
 		constructViewHierarchyAndConstraint()
@@ -54,7 +61,7 @@ class Editor: UIView, WrapperInnerScrollViewType {
 		}
 		
 		guard
-			let htmlUrl = coreBundle.url(forResource: "snow", withExtension: "html", subdirectory: "examples")
+			let htmlUrl = coreBundle.url(forResource: "okki", withExtension: "html", subdirectory: "examples")
 		else {
 			fatalError("load local localHTML failure")
 		}
@@ -75,5 +82,76 @@ class Editor: UIView, WrapperInnerScrollViewType {
 		}
 		
 		return coreBundle
+	}
+}
+
+extension Editor {
+	enum EvaluateJavaScriptError: Error {
+		case error(Error)
+		case formateResultType
+		case noneResult
+	}
+
+	typealias JSResult<T> = Swift.Result<T, EvaluateJavaScriptError>
+	typealias EvalJSCompletion<T> = (JSResult<T>) -> Void
+	private func evaJS<T>(_ js: String, _ completion: @escaping EvalJSCompletion<T> = { _ in }) {
+		print("evaluateJavaScript: \(js)")
+		webView.evaluateJavaScript(js) {
+			guard T.self != Void.self else { return }
+			
+			if let error = $1 {
+				completion(.failure(.error(error)))
+				return
+			}
+			
+			guard let value = $0 else {
+				completion(.failure(.noneResult))
+				return
+			}
+			
+			guard let result = value as? T else {
+				completion(.failure(.formateResultType))
+				return
+			}
+			
+			completion(.success(result))
+		}
+	}
+	
+	private func evaJSVoid(_ js: String, _ completion: EvalJSCompletion<Void>? = nil) {
+		if let closure = completion {
+			evaJS(js, closure)
+		} else {
+			let v: EvalJSCompletion<Void> = { _ in }
+			evaJS(js, v)
+		}
+	}
+	
+	private func js(_ s: String = #function) -> String {
+		s + ";"
+	}
+	
+	// Void
+	func focus() {
+		evaJSVoid(js())
+	}
+	
+	func setText() {
+		evaJSVoid(js())
+	}
+	
+	// Bool
+	func hasFocus() -> Guarantee<Bool> {
+		.init { seal in
+			self.evaJS(js()) { (r: JSResult<Bool>) in
+				switch r {
+				case .success(let value):
+					seal(value)
+				case .failure(let error):
+					DLOG(message: error)
+					seal(false)
+				}
+			}
+		}
 	}
 }

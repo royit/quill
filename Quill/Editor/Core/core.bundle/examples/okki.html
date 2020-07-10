@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bubble Theme - Quill Rich Text Editor</title>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+  
+<link rel="stylesheet" href="../quill.bubble.css" />
+
+<style>
+  .standalone-container {
+    margin: 50px auto;
+    max-width: 720px;
+  }
+  #bubble-container {
+    height: 350px;
+  }
+</style>
+
+</head>
+<body>
+  
+<div class="standalone-container">
+  <div id="bubble-container"></div>
+</div>
+
+  
+<script src="../quill.min.js"></script>
+<script src="../okki.js"></script>
+
+<script>
+	var quill = new Quill('#bubble-container', {
+	  placeholder: 'Compose an epic...',
+	  theme: 'bubble'
+	});
+</script>
+
+
+</body>
+</html>
+

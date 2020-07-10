@@ -20,6 +20,8 @@
 		B095AF6D23901748007A873B /* ScrollContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095AF6A23901748007A873B /* ScrollContainerViewController.swift */; };
 		B095AF6E23901748007A873B /* WrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095AF6B23901748007A873B /* WrapperView.swift */; };
 		B095AF6F23901748007A873B /* WrapperViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095AF6C23901748007A873B /* WrapperViewDataSource.swift */; };
+		B0B793F724B86F05007AD6A1 /* WKWebViewEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B793F624B86F05007AD6A1 /* WKWebViewEx.swift */; };
+		B0B793FA24B87093007AD6A1 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = B0B793F924B87093007AD6A1 /* PromiseKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,7 @@
 		B095AF6A23901748007A873B /* ScrollContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollContainerViewController.swift; sourceTree = "<group>"; };
 		B095AF6B23901748007A873B /* WrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WrapperView.swift; sourceTree = "<group>"; };
 		B095AF6C23901748007A873B /* WrapperViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WrapperViewDataSource.swift; sourceTree = "<group>"; };
+		B0B793F624B86F05007AD6A1 /* WKWebViewEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewEx.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0667ADA2390127A00E450AB /* RLayoutKit in Frameworks */,
+				B0B793FA24B87093007AD6A1 /* PromiseKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +89,7 @@
 			children = (
 				B0667AD62390114A00E450AB /* Editor.swift */,
 				B095AF6723901343007A873B /* EditorViewController.swift */,
+				B0B793F624B86F05007AD6A1 /* WKWebViewEx.swift */,
 				B0667AE02390130100E450AB /* Core */,
 			);
 			path = Editor;
@@ -161,6 +166,7 @@
 			name = Quill;
 			packageProductDependencies = (
 				B0667AD92390127A00E450AB /* RLayoutKit */,
+				B0B793F924B87093007AD6A1 /* PromiseKit */,
 			);
 			productName = Quill;
 			productReference = B0667ABC239010B500E450AB /* Quill.app */;
@@ -192,6 +198,7 @@
 			mainGroup = B0667AB3239010B500E450AB;
 			packageReferences = (
 				B0667AD82390127A00E450AB /* XCRemoteSwiftPackageReference "RLayoutKit" */,
+				B0B793F824B87093007AD6A1 /* XCRemoteSwiftPackageReference "PromiseKit" */,
 			);
 			productRefGroup = B0667ABD239010B500E450AB /* Products */;
 			projectDirPath = "";
@@ -222,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0667AC4239010B500E450AB /* ViewController.swift in Sources */,
+				B0B793F724B86F05007AD6A1 /* WKWebViewEx.swift in Sources */,
 				B0667AC0239010B500E450AB /* AppDelegate.swift in Sources */,
 				B0667AD72390114A00E450AB /* Editor.swift in Sources */,
 				B095AF6823901343007A873B /* EditorViewController.swift in Sources */,
@@ -374,13 +382,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HLDMS4HSVA;
+				DEVELOPMENT_TEAM = G55QJCJLG9;
 				INFOPLIST_FILE = "$(SRCROOT)/Quill/Supporting files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.royite.quill;
+				PRODUCT_BUNDLE_IDENTIFIER = com.okki.quill;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -394,13 +402,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HLDMS4HSVA;
+				DEVELOPMENT_TEAM = G55QJCJLG9;
 				INFOPLIST_FILE = "$(SRCROOT)/Quill/Supporting files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.royite.quill;
+				PRODUCT_BUNDLE_IDENTIFIER = com.okki.quill;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -440,6 +448,14 @@
 				minimumVersion = 0.4.0;
 			};
 		};
+		B0B793F824B87093007AD6A1 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/PromiseKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.13.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -447,6 +463,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B0667AD82390127A00E450AB /* XCRemoteSwiftPackageReference "RLayoutKit" */;
 			productName = RLayoutKit;
+		};
+		B0B793F924B87093007AD6A1 /* PromiseKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0B793F824B87093007AD6A1 /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			productName = PromiseKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
